@@ -292,8 +292,8 @@ def get_patent_claims(root_tree):
     claims = root_tree.findall(claims_path)
     claims_list = []
     # print("claims list:")
-    for cl in claims:
-      print(cl.text)
+    # for cl in claims:
+      # print(cl.text)
     if claims:
         for claim in claims:
             claim_data = {}
