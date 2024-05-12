@@ -307,7 +307,8 @@ def get_patent_claims(root_tree):
                 textList = []
                 for claim_text_index in range(len(claim_texts)):
                     this_claim_text = ""
-                    this_claim_text = claim_texts[claim_text_index].text.strip()
+                    if claim_texts[claim_text_index].text is not None:
+                        this_claim_text = claim_texts[claim_text_index].text.strip()
                     subclaims = claim_texts[claim_text_index].findall('*')
                     if subclaims != None and len(subclaims) > 0:
                         # print(f"sub-claims text: ({len(subclaims)} found)")
