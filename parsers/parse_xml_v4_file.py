@@ -1,3 +1,4 @@
+from lxml import etree
 import xml.etree.ElementTree as ET
 from xml.dom.minidom import parseString
 from xml.etree.ElementTree import fromstring, ElementTree
@@ -289,34 +290,16 @@ def get_detailed_description(root_tree):
 def get_patent_claims(root_tree):
     claims = root_tree.findall(claims_path)
     claims_list = []
-    # print("claims list:")
-    # for cl in claims:
-      # print(cl.text)
+          
     if claims:
         for claim in claims:
             claim_data = {}
             if (claim.attrib):
                 claim_data = {**claim_data, **claim.attrib}
-                # for key, value in claim.attrib.items():
-                    # print(f"... {key}: {value}")
             if (claim.findall('claim-text') != None):
-                claim_texts = claim.findall('claim-text')
-                # print(f"claims text: ({len(claim_texts)} elements)")
-                # for cl in claim_texts:
-                    # print(cl.text)
-                textList = []
-                for claim_text_index in range(len(claim_texts)):
-                    this_claim_text = ""
-                    if claim_texts[claim_text_index].text is not None:
-                        this_claim_text = claim_texts[claim_text_index].text.strip()
-                    subclaims = claim_texts[claim_text_index].findall('*')
-                    if subclaims != None and len(subclaims) > 0:
-                        # print(f"sub-claims text: ({len(subclaims)} found)")
-                        for cl in subclaims:
-                          # print(cl.text)
-                          this_claim_text += f"\n{cl.text}"
-                    textList.append(this_claim_text)
-                claim_data['claim_text'] = textList
+                full_claim_text = "".join(claim.itertext())
+                full_claim_text = "".join([s for s in full_claim_text.strip().splitlines(True) if s.strip()])
+                claim_data['claim_text'] = full_claim_text
             claims_list.append(claim_data)
     return claims_list
 
