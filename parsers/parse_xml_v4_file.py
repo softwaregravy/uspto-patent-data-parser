@@ -1,4 +1,3 @@
-from lxml import etree
 import xml.etree.ElementTree as ET
 from xml.dom.minidom import parseString
 from xml.etree.ElementTree import fromstring, ElementTree
